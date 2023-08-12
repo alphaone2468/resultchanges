@@ -73,12 +73,16 @@
         <div  class="maindiv">
             <div>
     <h1 class="heading">WhatIfResultChanges</h1>
+    <p id="pdfnotselecttext" class="hideme"> Pdf Not Selected Please Refresh The Page And Select Pdf</p>
     <label>
         <div class="makeflexthencenter">
             <img src="http://www.pngall.com/wp-content/uploads/2/Upload-PNG.png" alt="" id="upimg">
 
         </div>
-        <input type="file" id="inputfile" class="hideme"/>
+        <div class="makeflexthencenter">
+            <input type="file" id="inputfile" class="hideme" id="selectpdf"/>
+
+        </div>
 
     </label>
 
@@ -88,7 +92,7 @@
         <div>
             <button type="button" id="btnupload">upload</button>
             <p class="textcenter" id="text">click on upload after <br/> u select an pdf</p>
-            <p id="loading" class="hideme">loading....</p>
+            <p id="loading" class="hideme textcenter">loading....</p>
 
         </div>
     </div>
@@ -100,7 +104,7 @@
     </div>
     <div class="flex">
         <div>
-            <h1 id="result">Result</h1>
+            <h1 id="result" class="textcenter">Result</h1>
             <button onclick="resultcal()" id="calbut">Calculate Result</button>
 
         </div>
@@ -153,6 +157,13 @@
             document.getElementById("upimg").style.display="none";
             document.getElementById("text").style.display="none";
             document.getElementById("btnupload").style.display="none";
+            try{
+                document.getElementById("selectpdf").style.display="none";
+
+            }
+            catch(e){
+
+            }
 
         let data=resulttext.value
             
@@ -219,6 +230,9 @@
                 word=word+data[i];
             }
             console.log(finalarray)
+            if(finalarray.length==0){
+                document.getElementById("pdfnotselecttext").style.display="block";
+            }
             let cfa=[];
             word="";
             finalarray.forEach((val)=>{
@@ -350,7 +364,9 @@
             })
             console.log(total);
             console.log(res/total);
-            document.getElementById("result").innerHTML=res/total;
+            let profinal=res/total;
+            profinal=parseFloat(profinal.toFixed(2));
+            document.getElementById("result").innerHTML=profinal;
         }
         function handleclick(){
             console.log("calling");
