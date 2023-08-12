@@ -10,6 +10,13 @@
     <style>
         *{
             font-family: 'Open Sans', sans-serif;
+            color: white;
+            background-color: transparent;
+        }
+        body{
+            height: 100vh;
+            background-color: #41436a;
+            color: white;
         }
         textarea{
             width: 1500px;
@@ -17,7 +24,7 @@
             display: none;
         }
         .contentdiv{
-            border: 2px solid black;
+            border-bottom: 2px solid black;
             display: grid;
             grid-template-columns: 5fr 1fr 1fr; 
         }
@@ -25,11 +32,13 @@
             display: flex;
             justify-content: center;
         }
-        button{
+        button ,a{
                 padding: 5px 80px;
-            border-radius: 6px;
-            background-color: #7171cc;
+            border-radius: 20px;
+            background-color:transparent;
+            border: 2px solid white;
             color: white;
+            outline: 5px solid rebeccapurple;
         }
         .heading{
             text-align: center;
@@ -40,6 +49,7 @@
         img{
             height: 100%;
             width: 36%;
+            margin-top: 300px;
         }
         .makeflexthencenter{
             display: flex;
@@ -63,8 +73,14 @@
         }
         @media (max-width:800px){
             .maindiv{
-                margin: 0px 0px;
+                margin: 5px 5px;
             }
+        }
+        .addmargintop{
+            margin-top: 40px;
+        }
+        .hideme2{
+            visibility: hidden;
         }
     </style>
 </head>
@@ -74,7 +90,16 @@
             <div>
     <h1 class="heading">WhatIfResultChanges</h1>
     <p id="pdfnotselecttext" class="hideme"> Pdf Not Selected Please Refresh The Page And Select Pdf</p>
+    <p class="hideme2">Lorem ipsum dolor</p>
+    <h1>Smart Way To Avoid Boring Calculations</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At maiores a nesciunt odio. Minus ea quidem labore quod nemo. Praesentium?</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At maiores a nesciunt odio. Minus ea quidem labore quod nemo. Praesentium?</p>
+    <p class="hideme2">Lorem ipsum dolor</p>
+    <a href="#btnupload">Get Started</a>
+
     <label>
+
+
         <div class="makeflexthencenter">
             <img src="http://www.pngall.com/wp-content/uploads/2/Upload-PNG.png" alt="" id="upimg">
 
