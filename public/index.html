@@ -88,6 +88,7 @@
         <div>
             <button type="button" id="btnupload">upload</button>
             <p class="textcenter" id="text">click on upload after <br/> u select an pdf</p>
+            <p id="loading" class="hideme">loading....</p>
 
         </div>
     </div>
@@ -115,6 +116,7 @@
 
 
         btnupload.addEventListener('click',()=>{
+            document.getElementById("loading").style.display="block";
             const formdata=new FormData();
 
 
@@ -332,6 +334,7 @@
 
         
             })
+            document.getElementById("loading").style.display="none";
         }
         function resultcal(){
             console.log("calling");
