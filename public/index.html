@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <style>
+        *{
+            font-family: 'Open Sans', sans-serif;
+        }
+        textarea{
+            width: 1500px;
+            height: 700px;
+            display: none;
+        }
+        .contentdiv{
+            border: 2px solid black;
+            display: grid;
+            grid-template-columns: 5fr 1fr 1fr; 
+        }
+        .flex{
+            display: flex;
+            justify-content: center;
+        }
+        button{
+                padding: 5px 80px;
+            border-radius: 6px;
+            background-color: #7171cc;
+            color: white;
+        }
+        .heading{
+            text-align: center;
+        }
+        #btnupload{
+            margin-top: 10px;
+        }
+        img{
+            height: 100%;
+            width: 36%;
+        }
+        .makeflexthencenter{
+            display: flex;
+            justify-content: center;
+        }
+        .hideme{
+            display: none;
+        }
+        .textcenter{
+            text-align: center;
+        }
+        #calbut,#result{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="heading">WhatIfResultChanges</h1>
+    <label>
+        <div class="makeflexthencenter">
+            <img src="http://www.pngall.com/wp-content/uploads/2/Upload-PNG.png" alt="">
+
+        </div>
+        <input type="file" id="inputfile" class="hideme"/>
+
+    </label>
+
+
+    <br/>
+    <div class="makeflexthencenter">
+        <div>
+            <button type="button" id="btnupload">upload</button>
+            <p class="textcenter">click on upload after <br/> u select an pdf</p>
+
+        </div>
+    </div>
+    <br>
+    <br>
+    <textarea name="" id="resulttext" cols="30" rows="10"></textarea>
+    <div id="add">
+
+    </div>
+    <div class="flex">
+        <div>
+            <h1 id="result">Result</h1>
+            <button onclick="resultcal()" id="calbut">Calculate Result</button>
+
+        </div>
+
+
+    </div>
+    <script>
+        const btnupload=document.getElementById("btnupload");
+        const inputfile=document.getElementById("inputfile");
+        const resulttext=document.getElementById("resulttext");
+
+
+        btnupload.addEventListener('click',()=>{
+            const formdata=new FormData();
+
+
+            formdata.append("pdfFile",inputfile.files[0])
+
+
+
+            fetch("/gettext",{
+                method:"post",
+                body:formdata
+            }).then((response)=>{
+                return response.text();
+            }).then((extractedtext)=>{
+                resulttext.value=extractedtext
+                console.log(extractedtext)
+                cal();
+                })
+        })
+        let word;
+        let impdata;
+        let start;
+        let end;
+        let newdata1="";
+        let newdata2="";
+        let finaldata="";
+        let finaldata1="";
+        let wordarray=[];
+        let wordarray2=[];
+        let finalarray=[];
+        let creditsarray=[];
+        function cal(){
+            document.getElementById("calbut").style.display="block";
+            document.getElementById("result").style.display="block";
+        let data=resulttext.value
+            
+            newdata=data.toLowerCase()
+            // console.log(newdata)
+            for(var i=0;i<data.length;i++){
+                if(data[i]==newdata[i]){
+                    newdata1=newdata1+data[i];
+                }
+            }
+            // console.log(newdata1);
+            newdata2=newdata1.toLocaleUpperCase();
+            // console.log(newdata2);
+            for(var i=0;i<newdata1.length;i++){
+                if(newdata1[i]==newdata2[i]){
+                    finaldata=finaldata+newdata1[i];
+                }
+            }
+            console.log(finaldata)
+        
+            for(var i=0;i<finaldata.length;i++){
+                if(finaldata[i]=="-" || finaldata[i]==":" || finaldata[i]=="," || finaldata[i]=="=" || finaldata1=="/" ){
+                    finaldata1=finaldata1+" "
+                }
+                else{
+                    finaldata1=finaldata1+finaldata[i]
+                }
+            }
+            console.log(finaldata1)
+            for (let index = 0; index < finaldata1.length; index++) {
+                console.log(finaldata1[index]);
+                
+            }
+            word="";
+            for(var i=0;i<data.length;i++){
+                if(data[i]==" "){
+                    wordarray.push(word);
+                    var checkword=word+"\n";
+                    if(checkword=="Sec"){
+                        console.log("true");
+                    }
+                    else{
+                        console.log("false")
+                    }
+                    word="";
+                }
+                else{
+                    word=word+data[i];
+                }
+            }
+            console.log(wordarray)
+            let startnew=data.indexOf("Secured\n")+8;
+            let endnew=data.lastIndexOf("Result")+5;
+            console.log(startnew)
+            console.log(endnew)
+            word="";
+            for(var i=startnew;i<endnew;i++){
+                console.log(data[i]);
+                if(data[i]=="\n"){
+                    finalarray.push(word);
+                    console.log("new line startdred")
+                    word="";
+                }
+                word=word+data[i];
+            }
+            console.log(finalarray)
+            let cfa=[];
+            word="";
+            finalarray.forEach((val)=>{
+                word="";
+                len=val.length
+                for(var i=6;i>0;i--){
+                        word=word+val[len-i];
+                }
+                cfa.push(word);
+            })
+            console.log(cfa)
+            cfa.pop();
+            console.log(cfa)
+            
+            cfa.forEach((val)=>{
+                console.log()
+                creditsarray.push(parseInt(val[0]+val[1]));
+            })
+            console.log(creditsarray);
+            
+            for(var i=0;i<creditsarray.length;i++){
+                if(creditsarray[i]==5){
+                    creditsarray[i]=1.5;
+                }
+            }
+            console.log(creditsarray);
+            let gradearray=[];
+            cfa.forEach((val)=>{
+                console.log(val[val.length-1])
+                
+                if(val[val.length-1]=='S'){
+                    console.log("true");
+                    gradearray.push(10);
+                }
+                else if(val[val.length-1]=='A'){
+                    console.log("true");
+                    gradearray.push(9);
+                }
+                else if(val[val.length-1]=='B'){
+                    console.log("true");
+                    gradearray.push(8);
+                }
+                else if(val[val.length-1]=='C'){
+                    console.log("true");
+                    gradearray.push(7);
+                }
+                else if(val[val.length-1]=='D'){
+                    console.log("true");
+                    gradearray.push(6);
+                }
+                else if(val[val.length-1]=='E'){
+                    console.log("true");
+                    gradearray.push(5);
+                }
+                else{
+                    gradearray.push(0);
+                }
+            })
+            console.log(gradearray)
+            console.log(creditsarray)
+            creditsarray.forEach((val,index)=>{
+                if(val){
+
+                }
+                else{
+                    creditsarray[index]=0;
+                }
+            })
+            console.log(creditsarray)
+            console.log(cfa)
+            console.log()
+            let namearray=[];
+            // calculating namearrays
+            finalarray.forEach((val,index)=>{
+                word="";
+                console.log(val);
+                var len=val.length
+                var i1;
+                if(index==0){
+                    i1=5;
+                }
+                else{
+                    i1=6;
+                }
+                for(var i=i1;i<len-6;i++){
+                    console.log(val[i]);
+                    word=word+val[i];
+                }
+                namearray.push(word);
+            })
+            console.log(namearray);
+            namearray.pop();
+
+
+
+            namearray.forEach((val,index)=>{
+                var con=document.getElementById("add");
+                var divv=document.createElement("div");
+                divv.setAttribute("class","contentdiv")
+                var name=document.createElement("p");
+                var text=val;
+                name.append(text);
+                divv.append(name);
+                var c=document.createElement("p")
+                c.append(creditsarray[index]);
+                divv.append(c)
+                con.append(divv)
+                var inputfield=document.createElement("input")
+                inputfield.setAttribute("id",`inp${index}`);
+                inputfield.value=gradearray[index];
+                divv.append(inputfield)
+
+
+        
+            })
+        }
+        function resultcal(){
+            console.log("calling");
+            console.log(creditsarray);
+            var res=0;
+            creditsarray.forEach((val,index)=>{
+                res=res+val*document.getElementById(`inp${index}`).value;
+            })
+            console.log(res);
+            var total=0;
+            creditsarray.forEach((val)=>{
+                total=total+val;
+            })
+            console.log(total);
+            console.log(res/total);
+            document.getElementById("result").innerHTML=res/total;
+        }
+        function handleclick(){
+            console.log("calling");
+            document.getElementById("btnupload").click();
+        }
+    </script>
+</body>
+</html>
