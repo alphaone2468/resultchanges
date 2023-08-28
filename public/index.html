@@ -369,8 +369,9 @@
                 var text=val;
                 name.append(text);
                 divv.append(name);
-                var c=document.createElement("p")
-                c.append(creditsarray[index]);
+                var c=document.createElement("input")
+                c.setAttribute("id",`grade${index}`)
+                c.value=creditsarray[index];
                 divv.append(c)
                 con.append(divv)
                 var inputfield=document.createElement("input")
@@ -388,14 +389,14 @@
             console.log(creditsarray);
             var res=0;
             creditsarray.forEach((val,index)=>{
-                res=res+val*document.getElementById(`inp${index}`).value;
+                res=res+parseFloat(document.getElementById(`grade${index}`).value)*document.getElementById(`inp${index}`).value;
             })
             console.log(res);
             var total=0;
-            creditsarray.forEach((val)=>{
-                total=total+val;
+            creditsarray.forEach((val,index)=>{
+                total=total+parseFloat(document.getElementById(`grade${index}`).value)
             })
-            console.log(total);
+            console.log("total",total);
             console.log(res/total);
             let profinal=res/total;
             profinal=parseFloat(profinal.toFixed(2));
